@@ -29,41 +29,42 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun initBtn() {
+        with(viewBinding) {
+            btnLoad.setOnClickListener {
+                initWebView()
+            }
+        }
+    }
+
+    private fun initWebView() {
 
         val webViewClient = object : WebViewClient() {
 
-            var id: String = "begin"
-            var uuid: String = "begin"
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                viewModel.saveId(id, uuid)
-            }
-
+            var requestId: String = ""
+            var requestUuId: String = ""
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
                 if (request?.url?.queryParameterNames?.contains("id") == true) {
-                    id = request.url?.getQueryParameter("id").toString()
+                    requestId = request.url?.getQueryParameter("id").toString()
                 }
 
                 if (request?.url?.queryParameterNames?.contains("uuid") == true) {
-                    uuid = request.url?.getQueryParameter("uuid").toString()
+                    requestUuId = request.url?.getQueryParameter("uuid").toString()
                 }
                 return super.shouldOverrideUrlLoading(view, request)
             }
 
-
-        }
-
-        with(viewBinding) {
-            btnLoad.setOnClickListener {
-                viewModel.loadPage()
-                mainWebView.webViewClient = webViewClient
-                mainWebView.loadUrl("http://app.zaimforyou.ru/hello")
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                viewModel.saveId(requestId, requestUuId)
             }
         }
+
+        viewModel.loadPage()
+        viewBinding.mainWebView.webViewClient = webViewClient
+        viewBinding.mainWebView.loadUrl("http://app.zaimforyou.ru/hello")
 
     }
 
@@ -150,4 +151,3 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         fun getInstance() = MainFragment()
     }
 }
-
