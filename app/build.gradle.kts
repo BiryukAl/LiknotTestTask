@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.fragments)
     implementation(libs.view.binding.delegat)
     implementation(libs.view.model)
-    ksp(libs.lifecycle.compiler)
+    kapt(libs.lifecycle.compiler)
 //    Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

@@ -6,11 +6,11 @@ class GetRedirectIdUseCase(
     private val repository: RedirectRepository,
 ) {
 
-    fun getId(): String {
+    fun getId(): String? {
         return repository.getId()
     }
 
-    fun getUuId(): String {
+    fun getUuId(): String? {
         return repository.getUuId()
     }
 }

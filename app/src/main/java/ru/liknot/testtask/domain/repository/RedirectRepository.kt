@@ -5,6 +5,6 @@ interface RedirectRepository {
     fun saveId(id: String)
     fun saveUuId(uuid: String)
 
-    fun getId(): String
-    fun getUuId(): String
+    fun getId(): String?
+    fun getUuId(): String?
 }

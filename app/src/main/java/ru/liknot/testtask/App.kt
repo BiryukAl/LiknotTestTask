@@ -10,7 +10,7 @@ import ru.liknot.testtask.domain.repository.RedirectRepository
 import ru.liknot.testtask.domain.useCase.GetRedirectIdUseCase
 import ru.liknot.testtask.domain.useCase.SaveRedirectIdUseCase
 
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -18,7 +18,7 @@ class App: Application() {
         ServiceLocator.register<Context>(this)
 
         // Data
-        ServiceLocator.register<SharedPreferencesImpl>(locate())
+        ServiceLocator.register<SharedPreferencesImpl>(SharedPreferencesImpl(locate()))
         ServiceLocator.register<RedirectRepository>(RedirectRepositoryImpl(locate()))
 
         // Domain

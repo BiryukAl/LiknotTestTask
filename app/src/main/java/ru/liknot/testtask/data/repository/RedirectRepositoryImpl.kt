@@ -3,22 +3,22 @@ package ru.liknot.testtask.data.repository
 import ru.liknot.testtask.data.cache.SharedPreferencesImpl
 import ru.liknot.testtask.domain.repository.RedirectRepository
 
-class RedirectRepositoryImpl (
+class RedirectRepositoryImpl(
     private val local: SharedPreferencesImpl
-): RedirectRepository {
+) : RedirectRepository {
     override fun saveId(id: String) {
-        TODO("Not yet implemented")
+        local.saveId(id)
     }
 
     override fun saveUuId(uuid: String) {
-        TODO("Not yet implemented")
+        local.saveUuId(uuid)
     }
 
-    override fun getId(): String {
-        TODO("Not yet implemented")
+    override fun getId(): String? {
+        return local.getId()
     }
 
-    override fun getUuId(): String {
-        TODO("Not yet implemented")
+    override fun getUuId(): String? {
+        return local.getUuId()
     }
 }
