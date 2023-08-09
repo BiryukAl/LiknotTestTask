@@ -39,10 +39,12 @@ class MainViewModel : ViewModel() {
 
     fun saveId(id: String?, uuid: String?) {
         id?.let { saveRedirectIdUseCase.saveId(it) }
-        uuid?.let { saveRedirectIdUseCase.saveId(it) }
+        uuid?.let { saveRedirectIdUseCase.saveUuId(it) }
 
         _uiState.value = UiState.Success(id, uuid)
     }
 
-
+    fun loadPage() {
+        _uiState.value = UiState.Loading
+    }
 }

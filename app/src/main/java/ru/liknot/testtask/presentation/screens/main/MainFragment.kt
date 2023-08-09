@@ -2,6 +2,9 @@ package ru.liknot.testtask.presentation.screens.main
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,8 +25,46 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
 
         renderState()
-//        test
-        renderLayoutDefaultState("111", "112")
+        initBtn()
+    }
+
+    private fun initBtn() {
+
+        val webViewClient = object : WebViewClient() {
+
+            var id: String = "begin"
+            var uuid: String = "begin"
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                viewModel.saveId(id, uuid)
+            }
+
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                if (request?.url?.queryParameterNames?.contains("id") == true) {
+                    id = request.url?.getQueryParameter("id").toString()
+                }
+
+                if (request?.url?.queryParameterNames?.contains("uuid") == true) {
+                    uuid = request.url?.getQueryParameter("uuid").toString()
+                }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
+
+
+        }
+
+        with(viewBinding) {
+            btnLoad.setOnClickListener {
+                viewModel.loadPage()
+                mainWebView.webViewClient = webViewClient
+                mainWebView.loadUrl("http://app.zaimforyou.ru/hello")
+            }
+        }
+
     }
 
     private fun renderState() {
@@ -57,7 +98,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         with(viewBinding) {
             progressBar.visibility = View.GONE
             btnLoad.visibility = View.GONE
-
+            tvIdRedirect.visibility = View.VISIBLE
             mainWebView.visibility = View.VISIBLE
 
             (tvIdRedirect.layoutParams as? ConstraintLayout.LayoutParams)?.apply {
