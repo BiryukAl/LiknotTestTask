@@ -1,6 +1,7 @@
 package ru.liknot.testtask.presentation.screens.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -46,6 +47,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
+                Log.d("MY_TAG", request?.url.toString())
+
                 if (request?.url?.queryParameterNames?.contains("id") == true) {
                     requestId = request.url?.getQueryParameter("id").toString()
                 }
