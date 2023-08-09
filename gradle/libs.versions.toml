@@ -11,7 +11,6 @@ constraintlayout = "2.1.4"
 fragments = "1.6.1"
 view-binding-delegat = "1.5.6"
 lifecycle = "2.6.1"
-ksp = "1.8.22-1.0.11"
 
 
 
@@ -39,7 +38,6 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-#ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 
