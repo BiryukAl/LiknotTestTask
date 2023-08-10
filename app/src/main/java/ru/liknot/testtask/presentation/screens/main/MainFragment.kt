@@ -1,5 +1,6 @@
 package ru.liknot.testtask.presentation.screens.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,17 +38,20 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
 
         val webViewClient = object : WebViewClient() {
 
             var requestId: String = ""
             var requestUuId: String = ""
+
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
             ): Boolean {
-                Log.d("MY_TAG", request?.url.toString())
+
+                Log.d("DEBUG", "url redirect: ${request?.url}")
 
                 if (request?.url?.queryParameterNames?.contains("id") == true) {
                     requestId = request.url?.getQueryParameter("id").toString()
@@ -66,9 +70,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         viewModel.loadPage()
-        viewBinding.mainWebView.webViewClient = webViewClient
-        viewBinding.mainWebView.loadUrl("http://app.zaimforyou.ru/hello")
 
+        with(viewBinding) {
+            mainWebView.webViewClient = webViewClient
+            mainWebView.settings.javaScriptEnabled = true
+            mainWebView.loadUrl("http://app.zaimforyou.ru/hello")
+
+        }
     }
 
     private fun renderState() {
